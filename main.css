@@ -9,6 +9,10 @@ body {
     height: 100%;
 }
 
+body, html {
+    overflow-y: hidden;
+}
+
 .wrapper {
     display: flex;
     justify-content: center;
