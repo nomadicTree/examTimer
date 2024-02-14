@@ -24,9 +24,9 @@ function resetClock(event) {
     event.preventDefault();
 
     blackBackground();
-    document.getElementById("startTime").innerText = "";
-    document.getElementById("endTime").innerText = "";
-    document.getElementById("extraEndTime").innerText = "";
+    document.getElementById("startTime").innerHTML = "&nbsp;";
+    document.getElementById("endTime").innerHTML = "&nbsp;";
+    document.getElementById("extraEndTime").innerHTML = "&nbsp;";
     endTime = undefined;
     endTimeFinFlag = false;
     extraEndTimeFinFlag = false;

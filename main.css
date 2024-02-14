@@ -7,6 +7,7 @@ body {
     background-color: black;
     color: white;
     height: 100%;
+    margin: 0;
 }
 
 body, html {
@@ -14,20 +15,18 @@ body, html {
 }
 
 .wrapper {
-    display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
     flex-wrap: wrap;
     height: 100%;
 }
 
 .settings {
-    padding-bottom: 5%;
+    position: fixed;
     width: 100%;
-    max-width: 600px;
+    top: 0;
+    padding: 10px;
     margin-bottom: 20px;
-    align-self: flex-start;
+    overflow: hidden;
 }
 
 #examSettings ul {
@@ -53,14 +52,18 @@ body, html {
 
 .center {
     align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    vertical-align: middle;
-    flex-grow: 1;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
 }
 
 #clock {
     font-size: 15vw;
-    margin-bottom: 20px;
 }
 
 .timeInfo {
