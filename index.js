@@ -19,17 +19,31 @@ function whiteBackground() {
     console.log("Background set to white")
 }
 
-function resetClock(event) {
-    console.log("Reset button clicked")
-    event.preventDefault();
+function replaceWithNbsp(element) {
+    element.innerHTML = "&nbsp;";
+}
 
-    blackBackground();
-    document.getElementById("startTime").innerHTML = "&nbsp;";
-    document.getElementById("endTime").innerHTML = "&nbsp;";
-    document.getElementById("extraEndTime").innerHTML = "&nbsp;";
+function clearTimesAndStatuses() {
+    console.log("Clearing times and statuses")
+    const elementIds = ["startTime", "endTime", "endTimeStatus", "extraEndTime", "extraEndTimeStatus"];
+    for (elementId of elementIds) {
+        replaceWithNbsp(document.getElementById(elementId));
+    }
+}
+
+function resetGlobals() {
     endTime = undefined;
+    extraEndTime = undefined;
     endTimeFinFlag = false;
     extraEndTimeFinFlag = false;
+}
+
+function resetClock(event) {
+    console.log("Reset")
+    event.preventDefault();
+    blackBackground();
+    clearTimesAndStatuses();
+    resetGlobals();
     console.log("Clock reset");
 }
 
@@ -39,6 +53,7 @@ function getCurrentTime() {
 }
 
 function addMinutes(date, minutes) {
+    // Add given number of minutes to date, return new date
     const millisecondsPerMinute = 60000;
     var newTime = new Date(date.getTime() + minutes * millisecondsPerMinute);
     return newTime;
@@ -66,29 +81,39 @@ function timeToStr(time) {
     return clockStr;
 }
 
+function endTimeStatusSwitch() {
+    whiteBackground();
+    var endTimeStatus = document.getElementById("endTimeStatus");
+    endTimeStatus.textContent = "Fin";
+    endTimeFinFlag = true;
+}
+
+function extraEndTimeStatusSwitch() {
+    blackBackground();
+    var extraEndTimeStatus = document.getElementById("extraEndTimeStatus");
+    extraEndTimeStatus.textContent = "Fin";
+    extraEndTimeFinFlag = true;
+
+}
+
 function updateTime() {
     var now = getCurrentTime();
-    var clockStr = timeToStr(now);
     if (now >= endTime && endTimeFinFlag === false) {
-        console.log("Time elapsed")
-        whiteBackground();
-        document.getElementById("endTime").insertAdjacentHTML("beforeend", "<div>Fin</div>");
-        endTimeFinFlag = true;
+        endTimeStatusSwitch();
     } else if (extraTimeEnabled === true && now >= extraEndTime && extraEndTimeFinFlag === false) {
-        console.log("Extra time elapsed")
-        blackBackground();
-        document.getElementById("extraEndTime").insertAdjacentHTML("beforeend", "<div>Fin</div>");
-        extraEndTimeFinFlag = true;
+        extraEndTimeStatusSwitch();
     }
-
-    document.getElementById("clock").innerText = clockStr;
+    var clockStr = timeToStr(now);
+    document.getElementById("clock").textContent = clockStr;
     setTimeout(updateTime, 10);
 }
 
 function validateSettings() {
     duration = document.forms["examSettings"].duration.value;
-    if (duration == null || duration == "" || duration < 0) {
-        console.error("Invalid duration: " + duration + "\nDuration must be greater than 0");
+    if (duration == null || duration == "" || duration <= 0) {
+        var errorMessage = "Invalid duration: " + duration + "\nDuration must be greater than 0";
+        console.error(errorMessage);
+        alert(errorMessage);
         return false;
     } else {
         console.log("Valid duration: " + duration);
@@ -137,10 +162,10 @@ function startExam() {
     console.log("extraEndTime: " + extraEndTime);
     console.log("extraEndTimeStr: " + extraEndTimeStr);
 
-    document.getElementById("startTime").innerText = startTimeStr;
-    document.getElementById("endTime").innerText = endTimeStr;
+    document.getElementById("startTime").textContent = startTimeStr;
+    document.getElementById("endTime").textContent = endTimeStr;
     if (extraTimeEnabled) {
-        document.getElementById("extraEndTime").innerText = extraEndTimeStr;
+        document.getElementById("extraEndTime").textContent = extraEndTimeStr;
     }
 }
 
