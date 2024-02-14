@@ -9,14 +9,14 @@ function blackBackground() {
     var element = document.getElementsByTagName("body")[0];
     element.style.backgroundColor = "black";
     element.style.color = "white";
-    console.log("Background set to black")
+    //console.log("Background set to black")
 }
 
 function whiteBackground() {
     var element = document.getElementsByTagName("body")[0];
     element.style.backgroundColor = "white";
     element.style.color = "black";
-    console.log("Background set to white")
+    //console.log("Background set to white")
 }
 
 function replaceWithNbsp(element) {
@@ -24,7 +24,7 @@ function replaceWithNbsp(element) {
 }
 
 function clearTimesAndStatuses() {
-    console.log("Clearing times and statuses")
+    //console.log("Clearing times and statuses")
     const elementIds = ["startTime", "endTime", "endTimeStatus", "extraEndTime", "extraEndTimeStatus"];
     for (elementId of elementIds) {
         replaceWithNbsp(document.getElementById(elementId));
@@ -39,12 +39,12 @@ function resetGlobals() {
 }
 
 function resetClock(event) {
-    console.log("Reset")
+    //console.log("Reset")
     event.preventDefault();
     blackBackground();
     clearTimesAndStatuses();
     resetGlobals();
-    console.log("Clock reset");
+    //console.log("Clock reset");
 }
 
 function getCurrentTime() {
@@ -116,18 +116,18 @@ function validateSettings() {
         alert(errorMessage);
         return false;
     } else {
-        console.log("Valid duration: " + duration);
+        //console.log("Valid duration: " + duration);
         return true;
     }
 }
 
 function preflightChecks(event) {
-    console.log("Start button clicked");
+    //console.log("Start button clicked");
     event.preventDefault();
     resetClock(event)
     var validSettings = validateSettings();
     if (validSettings) {
-        console.log("Starting exam");
+        //console.log("Starting exam");
         startExam();
     }
 }
@@ -139,7 +139,7 @@ function checkExtraTime() {
     } else {
         extraTimeEnabled = false;
     }
-    console.log("Extra time enabled: " + extraTimeEnabled);
+    //console.log("Extra time enabled: " + extraTimeEnabled);
 }
 
 function startExam() {
@@ -148,19 +148,19 @@ function startExam() {
     var minutes = duration;
     var startTime = getCurrentTime()
     var startTimeStr = timeToStr(startTime);
-    console.log("startTime: " + startTime);
-    console.log("startTimeStr: " + startTimeStr);
+    //console.log("startTime: " + startTime);
+    //console.log("startTimeStr: " + startTimeStr);
 
     endTime = addMinutes(startTime, minutes);
     var endTimeStr = timeToStr(endTime);
-    console.log("endTime: " + endTime);
-    console.log("endTimeStr: " + endTimeStr);
+    //console.log("endTime: " + endTime);
+    //console.log("endTimeStr: " + endTimeStr);
 
     var extraMinutes = minutes * extraTimeMultiplier;
     extraEndTime = addMinutes(startTime, extraMinutes);
     var extraEndTimeStr = timeToStr(extraEndTime);
-    console.log("extraEndTime: " + extraEndTime);
-    console.log("extraEndTimeStr: " + extraEndTimeStr);
+    //console.log("extraEndTime: " + extraEndTime);
+    //console.log("extraEndTimeStr: " + extraEndTimeStr);
 
     document.getElementById("startTime").textContent = startTimeStr;
     document.getElementById("endTime").textContent = endTimeStr;
