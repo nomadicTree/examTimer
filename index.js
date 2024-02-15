@@ -5,18 +5,26 @@ var endTimeFinFlag = false;
 var extraEndTimeFinFlag = false;
 var duration;
 
-function blackBackground() {
-    var element = document.getElementsByTagName("body")[0];
-    element.style.backgroundColor = "black";
-    element.style.color = "white";
-    //console.log("Background set to black")
+function whiteBackground() {
+    const element = document.getElementsByTagName("body")[0];
+    if (element.style.backgroundColor != "white") {
+        element.style.backgroundColor = "white";
+    }
+    if (element.style.color != "black") {
+        element.style.color = "black";
+    }
+    //console.log("Background set to white")
 }
 
-function whiteBackground() {
-    var element = document.getElementsByTagName("body")[0];
-    element.style.backgroundColor = "white";
-    element.style.color = "black";
-    //console.log("Background set to white")
+function blackBackground() {
+    const element = document.getElementsByTagName("body")[0];
+    if (element.style.backgroundColor != "black") {
+        element.style.backgroundColor = "black";
+    }
+    if (element.style.color != "white") {
+        element.style.color = "white";
+    }
+    //console.log("Background set to black")
 }
 
 function replaceWithNbsp(element) {
