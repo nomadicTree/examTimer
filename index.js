@@ -42,7 +42,7 @@ function resetGlobals() {
 function resetClock(event) {
     event.preventDefault();
     whiteBackground();
-    if (checkExtraTime()) {
+    if (!checkExtraTime()) {
         hideExtraTimeInfo();
     }
     clearTimesAndStatuses();
@@ -161,6 +161,7 @@ function checkExtraTime() {
     } else {
         extraTimeEnabled = false;
     }
+    return extraTimeEnabled;
     //console.log("Extra time enabled: " + extraTimeEnabled);
 }
 
