@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clock</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="whitebg.css" id="colors">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
@@ -28,7 +29,7 @@
                     </li>
 
             <div class="buttons">
-                <button id="start" onclick="preflightChecks(event)">Start</button>
+                <button id="start" onclick="preflightChecks(event)" title="Calculate start and end times, starting at the next whole minute.">Calculate times</button>
                 <button id="reset" onclick="resetClock(event)">Reset</button>
             </div>
             </form>
@@ -48,7 +49,7 @@
                         <div id="endTime">&nbsp;</div>
                         <div id="endTimeStatus">&nbsp;</div>
                     </li>
-                    <li>
+                    <li id="extraTimeInfo">
                         Extra time
                         <div id="extraEndTime">&nbsp;</div>
                         <div id="extraEndTimeStatus">&nbsp;</div>

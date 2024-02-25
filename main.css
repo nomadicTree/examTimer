@@ -4,8 +4,6 @@ html {
 
 body {
     font-family:'Roboto Mono', 'Courier New', Courier, monospace;
-    background-color: black;
-    color: white;
     height: 100%;
     margin: 0;
 }
@@ -37,7 +35,6 @@ body, html {
 
 #examSettings li {
     display: inline-block;
-    margin-right: 10px;
 }
 
 #extraTimeToggle {
@@ -63,12 +60,12 @@ body, html {
 }
 
 #clock {
-    font-size: 16vw;
+    font-size: 18vw;
 }
 
 .timeInfo {
     justify-content: center;
-    font-size: 3vw;
+    font-size: 4vw;
 }
 
 .timeInfo ul {
@@ -80,4 +77,8 @@ body, html {
 
 .timeInfo li {
     margin: 0 4vw;
+}
+
+#extraTimeInfo {
+    display: none;
 }

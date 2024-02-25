@@ -1,30 +1,21 @@
 var endTime;
+var startTime;
 var extraTimeEnabled = false;
 var extraEndTime;
 var endTimeFinFlag = false;
 var extraEndTimeFinFlag = false;
+var startTimeFlag = false;
 var duration;
 
 function whiteBackground() {
-    const element = document.getElementsByTagName("body")[0];
-    if (element.style.backgroundColor != "white") {
-        element.style.backgroundColor = "white";
-    }
-    if (element.style.color != "black") {
-        element.style.color = "black";
-    }
-    //console.log("Background set to white")
+    const whitebgCSS = 'whitebg.css';
+    const colors = document.getElementById('colors');
+    colors.setAttribute('href', whitebgCSS);
 }
 
 function blackBackground() {
-    const element = document.getElementsByTagName("body")[0];
-    if (element.style.backgroundColor != "black") {
-        element.style.backgroundColor = "black";
-    }
-    if (element.style.color != "white") {
-        element.style.color = "white";
-    }
-    //console.log("Background set to black")
+    const blackbgCSS = 'blackbg.css';
+    colors.setAttribute('href', blackbgCSS);
 }
 
 function replaceWithNbsp(element) {
@@ -44,12 +35,16 @@ function resetGlobals() {
     extraEndTime = undefined;
     endTimeFinFlag = false;
     extraEndTimeFinFlag = false;
+    startTimeFlag = false;
+    startTime = undefined;
 }
 
 function resetClock(event) {
-    //console.log("Reset")
     event.preventDefault();
-    blackBackground();
+    whiteBackground();
+    if (checkExtraTime()) {
+        hideExtraTimeInfo();
+    }
     clearTimesAndStatuses();
     resetGlobals();
     //console.log("Clock reset");
@@ -73,6 +68,17 @@ function padWithLeadingZero(i) {
         i = "0" + i;
     }
     return i;
+}
+
+
+function hideExtraTimeInfo() {
+    const extraTimeInfoVisibility = document.getElementById('extraTimeInfo');
+    extraTimeInfoVisibility.style.display = 'none';
+}
+
+function showExtraTimeInfo() {
+    const extraTimeInfoVisibility = document.getElementById('extraTimeInfo');
+    extraTimeInfoVisibility.style.display = 'block';
 }
 
 function timeToStr(time) {
@@ -104,8 +110,16 @@ function extraEndTimeStatusSwitch() {
 
 }
 
+function startTimeStatusSwitch() {
+    blackBackground();
+    startTimeFlag = true;
+}
+
 function updateTime() {
     var now = getCurrentTime();
+    if (now >= startTime && startTimeFlag === false) {
+        startTimeStatusSwitch();
+    }
     if (now >= endTime && endTimeFinFlag === false) {
         endTimeStatusSwitch();
     } else if (extraTimeEnabled === true && now >= extraEndTime && extraEndTimeFinFlag === false) {
@@ -141,7 +155,7 @@ function preflightChecks(event) {
 }
 
 function checkExtraTime() {
-    var checkbox = document.getElementById("extraTimeToggle");
+    const checkbox = document.getElementById("extraTimeToggle");
     if (checkbox.checked == true) {
         extraTimeEnabled = true;
     } else {
@@ -150,11 +164,19 @@ function checkExtraTime() {
     //console.log("Extra time enabled: " + extraTimeEnabled);
 }
 
+function calculateNextNearestMinute(date) {
+    // Round given date to next nearest minute
+    const coefficient = 1000 * 60;
+    const roundedTime = new Date(Math.ceil(date.getTime() / coefficient) * coefficient);
+    return roundedTime;
+}
+
 function startExam() {
     const extraTimeMultiplier = 1.25;
     checkExtraTime();
     var minutes = duration;
-    var startTime = getCurrentTime()
+    startTime = getCurrentTime()
+    startTime = calculateNextNearestMinute(startTime);
     var startTimeStr = timeToStr(startTime);
     //console.log("startTime: " + startTime);
     //console.log("startTimeStr: " + startTimeStr);
@@ -173,7 +195,10 @@ function startExam() {
     document.getElementById("startTime").textContent = startTimeStr;
     document.getElementById("endTime").textContent = endTimeStr;
     if (extraTimeEnabled) {
+        showExtraTimeInfo();
         document.getElementById("extraEndTime").textContent = extraEndTimeStr;
+    } else {
+        hideExtraTimeInfo();
     }
 }
 
