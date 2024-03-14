@@ -150,7 +150,7 @@ function preflightChecks(event) {
     var validSettings = validateSettings();
     if (validSettings) {
         //console.log("Starting exam");
-        startExam();
+        startExam(event);
     }
 }
 
@@ -172,12 +172,14 @@ function calculateNextNearestMinute(date) {
     return roundedTime;
 }
 
-function startExam() {
+function startExam(event) {
     const extraTimeMultiplier = 1.25;
     checkExtraTime();
     var minutes = duration;
     startTime = getCurrentTime()
-    startTime = calculateNextNearestMinute(startTime);
+    if (!event.shiftKey) {
+        startTime = calculateNextNearestMinute(startTime);
+    }
     var startTimeStr = timeToStr(startTime);
     //console.log("startTime: " + startTime);
     //console.log("startTimeStr: " + startTimeStr);
