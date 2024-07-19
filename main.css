@@ -1,18 +1,15 @@
-html {
+html, body {
     height: 100%;
+    margin: 0;
+    overflow-y: hidden; /* Prevent scrolling */
 }
 
 body {
-    font-family:'Roboto Mono', 'Courier New', Courier, monospace;
-    height: 100%;
-    margin: 0;
-}
-
-body, html {
-    overflow-y: hidden;
+    font-family: 'Roboto Mono', 'Courier New', Courier, monospace;
 }
 
 .wrapper {
+    display: flex;
     justify-content: center;
     flex-wrap: wrap;
     height: 100%;
@@ -20,31 +17,76 @@ body, html {
 
 .settings {
     position: fixed;
-    width: 100%;
     top: 0;
-    padding: 10px;
-    margin-bottom: 20px;
-    overflow: hidden;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 5px 15px; /* Reduced padding */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure it stays on top */
+    font-size: 13px; /* Slightly smaller font size */
+    color: black;
 }
 
 #examSettings ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex; /* Align list items horizontally */
+    gap: 15px; /* Reduced space between items */
 }
 
 #examSettings li {
-    display: inline-block;
+    display: flex;
+    align-items: center;
 }
 
-#extraTimeToggle {
-    padding: 0;
-    margin: 0;
-    transform: scale(1.25);
+#examSettings label {
+    margin: 0; /* Remove margin for labels */
+    display: flex;
+    align-items: center; /* Align items vertically */
+    font-size: 13px; /* Slightly smaller font size for label */
 }
 
-.settings input {
-    width: 40px;
+#examSettings input[type="number"] {
+    margin-left: 5px; /* Margin between label and number input */
+    width: 40px; /* Adjust width for better visibility */
+}
+
+#examSettings input[type="checkbox"] {
+    margin: 0; /* Remove margin for checkbox */
+    transform: scale(1.1); /* Slightly smaller scaling */
+    margin-left: 8px;
+}
+
+.settings .buttons {
+    display: flex;
+    gap: 8px; /* Reduced space between buttons */
+}
+
+.settings .buttons button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 6px 12px; /* Reduced padding for a more compact look */
+    font-size: 13px; /* Slightly smaller font size */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for modern look */
+}
+
+.settings .buttons button:hover {
+    background-color: #0056b3;
+}
+
+.settings .buttons button:active {
+    background-color: #004494;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
 }
 
 .center {
@@ -60,25 +102,31 @@ body, html {
 }
 
 #clock {
-    font-size: 16vw;
+    font-size: 18vw; /* Adjust font size as needed */
 }
 
 .timeInfo {
+    display: flex;
+    flex-direction: row; /* Keep items in a row */
     justify-content: center;
-    font-size: 3vw;
+    font-size: 4vw;
+    width: 100%; /* Full width for alignment */
+    box-sizing: border-box; /* Include padding and border in width */
 }
 
 .timeInfo ul {
     display: flex;
     list-style: none;
     padding: 0;
+    margin: 0;
     justify-content: center;
+    gap: 10vw; /* Adjust spacing between time items */
 }
 
 .timeInfo li {
-    margin: 0 4vw;
+    margin: 0; /* Remove margin to reduce spacing */
 }
 
 #extraTimeInfo {
-    display: none;
+    display: none; /* Hide extra time info by default */
 }
