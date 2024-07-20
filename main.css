@@ -6,6 +6,11 @@ html, body {
 
 body {
     font-family: 'Roboto Mono', 'Courier New', Courier, monospace;
+    cursor: default;
+}
+
+body.cursor-hidden {
+    cursor: none;
 }
 
 .wrapper {
@@ -36,7 +41,7 @@ body {
     font-family: sans-serif;
 }
 
-#examSettings ul {
+#timerSettings ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -44,24 +49,24 @@ body {
     gap: 15px; /* Reduced space between items */
 }
 
-#examSettings li {
+#timerSettings li {
     display: flex;
     align-items: center;
 }
 
-#examSettings label {
+#timerSettings label {
     margin: 0; /* Remove margin for labels */
     display: flex;
     align-items: center; /* Align items vertically */
     font-size: 13px; /* Slightly smaller font size for label */
 }
 
-#examSettings input[type="number"] {
+#timerSettings input[type="number"] {
     margin-left: 5px; /* Margin between label and number input */
     width: 40px; /* Adjust width for better visibility */
 }
 
-#examSettings input[type="checkbox"] {
+#timerSettings input[type="checkbox"] {
     margin: 0; /* Remove margin for checkbox */
     transform: scale(1.1); /* Slightly smaller scaling */
     margin-left: 8px;

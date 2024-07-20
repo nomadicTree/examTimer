@@ -151,7 +151,7 @@ function updateTime() {
 }
 
 function validateSettings() {
-    duration = document.forms["examSettings"].duration.value;
+    duration = document.forms["timerSettings"].duration.value;
     if (duration == null || duration == "" || duration <= 0) {
         var errorMessage = "Invalid duration: " + duration + "\nDuration must be greater than 0";
         console.error(errorMessage);
@@ -245,20 +245,15 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const button = document.getElementById('start');
 
-    // Flag to track if Shift is held
-    let shiftHeld = false;
-
     // Add event listeners for keydown and keyup
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Shift') {
-            shiftHeld = true;
             button.classList.add('shift-held');
         }
     });
 
     document.addEventListener('keyup', (event) => {
         if (event.key === 'Shift') {
-            shiftHeld = false;
             button.classList.remove('shift-held');
         }
     });
@@ -266,3 +261,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Attach the click event handler to the button
     button.addEventListener('click', handleCalculateTimesClick);
 });
+
+let inactivityTimeout;
+const inactivityPeriod = 3000; // Time in milliseconds (e.g., 3000ms = 3 seconds)
+
+// Function to handle hiding the cursor
+function hideCursor() {
+    document.body.classList.add('cursor-hidden');
+}
+
+// Function to handle showing the cursor
+function showCursor() {
+    document.body.classList.remove('cursor-hidden');
+}
+
+// Function to reset the inactivity timer
+function resetInactivityTimer() {
+    showCursor(); // Show cursor on user activity
+    clearTimeout(inactivityTimeout); // Clear any existing timeout
+    inactivityTimeout = setTimeout(hideCursor, inactivityPeriod); // Set new timeout
+}
+
+// Attach event listeners to detect user activity
+document.addEventListener('mousemove', resetInactivityTimer);
+document.addEventListener('keypress', resetInactivityTimer);
+document.addEventListener('mousedown', resetInactivityTimer); // For mouse clicks
+document.addEventListener('scroll', resetInactivityTimer); // For scrolling
+
+// Initialize the timer when the page loads
+resetInactivityTimer();
