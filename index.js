@@ -230,3 +230,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const button = document.getElementById('start');
+
+    // Flag to track if Shift is held
+    let shiftHeld = false;
+
+    // Add event listeners for keydown and keyup
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Shift') {
+            shiftHeld = true;
+            button.classList.add('shift-held');
+        }
+    });
+
+    document.addEventListener('keyup', (event) => {
+        if (event.key === 'Shift') {
+            shiftHeld = false;
+            button.classList.remove('shift-held');
+        }
+    });
+
+    // Attach the click event handler to the button
+    button.addEventListener('click', handleCalculateTimesClick);
+});
