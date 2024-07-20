@@ -148,3 +148,39 @@ body {
     border: 2px solid #ff9900; /* Border color */
     transition: all 0.3s ease; /* Smooth transition */
 }
+
+
+@keyframes flash-from-black {
+    0% { background-color: #000000; color: #ffffff;} 
+    10% { background-color: #ffffff; color: #000000;} 
+    20% { background-color: #000000; color: #ffffff;} 
+    30% { background-color: #ffffff; color: #000000;} 
+    40% { background-color: #000000; color: #ffffff;}
+    50% { background-color: #ffffff; color: #000000;}
+    60% { background-color: #000000; color: #ffffff;} 
+    70% { background-color: #ffffff; color: #000000;} 
+    80% { background-color: #000000; color: #ffffff;} 
+    100% { background-color: #ffffff; color: #000000;} 
+}
+
+@keyframes flash-from-white {
+    0% { background-color: #ffffff; color: #000000;} 
+    10% { background-color: #000000; color: #ffffff;} 
+    20% { background-color: #ffffff; color: #000000;} 
+    30% { background-color: #000000; color: #ffffff;} 
+    40% { background-color: #ffffff; color: #000000;}
+    50% { background-color: #000000; color: #ffffff;} 
+    60% { background-color: #ffffff; color: #000000;} 
+    70% { background-color: #000000; color: #ffffff;}
+    80% { background-color: #ffffff; color: #000000;} 
+    90% { background-color: #000000; color: #ffffff;} 
+    100% { background-color: #ffffff; color: #000000;} 
+}
+
+.flash-background-black {
+    animation: flash-from-black 5s ease-out;
+}
+
+.flash-background-white {
+    animation: flash-from-white 5s ease-out;
+}

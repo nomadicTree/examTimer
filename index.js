@@ -98,23 +98,35 @@ function timeToStr(time) {
 }
 
 function endTimeStatusSwitch() {
-    whiteBackground();
     var endTimeStatus = document.getElementById("endTimeStatus");
     endTimeStatus.textContent = "Fin";
     endTimeFinFlag = true;
+    // Apply the flash animation
+    document.body.classList.add('flash-background-black');
+    // Remove the flash animation class after the animation ends
+    setTimeout(() => {
+        document.body.classList.remove('flash-background-black');
+    }, 5000); // Duration should match the animation duration (1s in this case)
+    whiteBackground();
 }
 
 function extraEndTimeStatusSwitch() {
-    blackBackground();
     var extraEndTimeStatus = document.getElementById("extraEndTimeStatus");
     extraEndTimeStatus.textContent = "Fin";
     extraEndTimeFinFlag = true;
-
+    document.body.classList.add('flash-background-white');
+    setTimeout(() => {
+        document.body.classList.remove('flash-background-black');
+    }, 5000); // Duration should match the animation duration (1s in this case)
 }
 
 function startTimeStatusSwitch() {
     blackBackground();
     startTimeFlag = true;
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function updateTime() {
