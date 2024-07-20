@@ -6,6 +6,12 @@ var endTimeFinFlag = false;
 var extraEndTimeFinFlag = false;
 var startTimeFlag = false;
 var duration;
+var timerRunning = false;
+
+function getCurrentTime() {
+    now = new Date();
+    return now;
+}
 
 function whiteBackground() {
     const whitebgCSS = 'whitebg.css';
@@ -23,7 +29,6 @@ function replaceWithNbsp(element) {
 }
 
 function clearTimesAndStatuses() {
-    //console.log("Clearing times and statuses")
     const elementIds = ["startTime", "endTime", "endTimeStatus", "extraEndTime", "extraEndTimeStatus"];
     for (elementId of elementIds) {
         replaceWithNbsp(document.getElementById(elementId));
@@ -37,6 +42,7 @@ function resetGlobals() {
     extraEndTimeFinFlag = false;
     startTimeFlag = false;
     startTime = undefined;
+    timerRunning = false;
 }
 
 function resetClock(event) {
@@ -47,13 +53,9 @@ function resetClock(event) {
     }
     clearTimesAndStatuses();
     resetGlobals();
-    //console.log("Clock reset");
 }
 
-function getCurrentTime() {
-    now = new Date();
-    return now;
-}
+
 
 function addMinutes(date, minutes) {
     // Add given number of minutes to date, return new date
@@ -122,8 +124,14 @@ function updateTime() {
     }
     if (now >= endTime && endTimeFinFlag === false) {
         endTimeStatusSwitch();
+        if (!extraTimeEnabled) {
+            timerRunning = false;
+            showSettingsMenu();
+        }
     } else if (extraTimeEnabled === true && now >= extraEndTime && extraEndTimeFinFlag === false) {
         extraEndTimeStatusSwitch();
+        timerRunning = false;
+        showSettingsMenu();
     }
     var clockStr = timeToStr(now);
     document.getElementById("clock").textContent = clockStr;
@@ -138,31 +146,22 @@ function validateSettings() {
         alert(errorMessage);
         return false;
     } else {
-        //console.log("Valid duration: " + duration);
         return true;
     }
 }
 
 function preflightChecks(event) {
-    //console.log("Start button clicked");
     event.preventDefault();
     resetClock(event)
     var validSettings = validateSettings();
     if (validSettings) {
-        //console.log("Starting exam");
-        startExam(event);
+        startTimer(event);
     }
 }
 
 function checkExtraTime() {
     const checkbox = document.getElementById("extraTimeToggle");
-    if (checkbox.checked == true) {
-        extraTimeEnabled = true;
-    } else {
-        extraTimeEnabled = false;
-    }
-    return extraTimeEnabled;
-    //console.log("Extra time enabled: " + extraTimeEnabled);
+    return checkbox.checked;
 }
 
 function calculateNextNearestMinute(date) {
@@ -172,28 +171,22 @@ function calculateNextNearestMinute(date) {
     return roundedTime;
 }
 
-function startExam(event) {
+function startTimer(event) {
     const extraTimeMultiplier = 1.25;
-    checkExtraTime();
+    extraTimeEnabled = checkExtraTime();
     var minutes = duration;
     startTime = getCurrentTime()
-    if (!event.shiftKey) {
+    if (!event.shiftKey) { // If shift is held down, start the timer immediately
         startTime = calculateNextNearestMinute(startTime);
     }
     var startTimeStr = timeToStr(startTime);
-    //console.log("startTime: " + startTime);
-    //console.log("startTimeStr: " + startTimeStr);
 
     endTime = addMinutes(startTime, minutes);
     var endTimeStr = timeToStr(endTime);
-    //console.log("endTime: " + endTime);
-    //console.log("endTimeStr: " + endTimeStr);
 
     var extraMinutes = minutes * extraTimeMultiplier;
     extraEndTime = addMinutes(startTime, extraMinutes);
     var extraEndTimeStr = timeToStr(extraEndTime);
-    //console.log("extraEndTime: " + extraEndTime);
-    //console.log("extraEndTimeStr: " + extraEndTimeStr);
 
     document.getElementById("startTime").textContent = startTimeStr;
     document.getElementById("endTime").textContent = endTimeStr;
@@ -203,5 +196,37 @@ function startExam(event) {
     } else {
         hideExtraTimeInfo();
     }
+    timerRunning = true;
 }
+
+function showSettingsMenu() {
+    const settingsMenu = document.querySelector('.settings');
+    settingsMenu.style.transform = 'translateY(0)';
+    settingsMenu.style.opacity = '1';
+}
+
+// toggle visibility of settings bar
+document.addEventListener('DOMContentLoaded', () => {
+    const settingsMenu = document.querySelector('.settings');
+
+    let isSettingsVisible = true;
+
+    document.addEventListener('mousemove', (event) => {
+        if (timerRunning) { // Only hide settings if the timer is running
+            if (event.clientY <= 50) {
+                if (!isSettingsVisible) {
+                    settingsMenu.style.transform = 'translateY(0)';
+                    settingsMenu.style.opacity = '1';
+                    isSettingsVisible = true;
+                }
+            } else {
+                if (isSettingsVisible) {
+                    settingsMenu.style.transform = 'translateY(-100%)';
+                    settingsMenu.style.opacity = '0';
+                    isSettingsVisible = false;
+                }
+            }
+        }
+    });
+});
 

@@ -30,6 +30,10 @@ body {
     z-index: 1000; /* Ensure it stays on top */
     font-size: 13px; /* Slightly smaller font size */
     color: black;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(0); /* Start in place */
+    opacity: 1;
+    font-family: sans-serif;
 }
 
 #examSettings ul {
